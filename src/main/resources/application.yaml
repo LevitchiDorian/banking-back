@@ -1,0 +1,35 @@
+overdraft:
+  premium:
+    limit: "5000"  # Valoarea pentru conturile premium
+  standard:
+    limit: "1000"   # Dacă este necesar
+
+
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: root
+    password: 123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        default_schema: public
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yaml
+    enabled: true
+
+jwt:
+  secret: "470d677417ed8f552f69e14d363850291654e8484161fd171a37676e848f7ffb"
+  expiration-time: 86400000  # 24 de ore
+
+#cors:
+#  allowed-origins: "http://localhost:5173"
