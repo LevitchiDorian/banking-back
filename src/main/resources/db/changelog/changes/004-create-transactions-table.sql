@@ -1,8 +1,8 @@
-CREATE TABLE transactions (
-                              id BIGSERIAL PRIMARY KEY,
-                              from_account VARCHAR(50) REFERENCES accounts(account_number) ON DELETE SET NULL,
-                              to_account VARCHAR(50) REFERENCES accounts(account_number) ON DELETE SET NULL,
-                              amount DECIMAL(15, 2) NOT NULL,
-                              description VARCHAR(255),
-                              timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- CREATE TABLE transactions (
+--                               id BIGSERIAL PRIMARY KEY,
+--                               from_account VARCHAR(50) REFERENCES accounts(account_number) ON DELETE SET NULL,
+--                               to_account VARCHAR(50) REFERENCES accounts(account_number) ON DELETE SET NULL,
+--                               amount DECIMAL(15, 2) NOT NULL,
+--                               description VARCHAR(255),
+--                               timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );

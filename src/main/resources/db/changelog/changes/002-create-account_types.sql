@@ -1,12 +1,12 @@
-CREATE TABLE account_types (
-                               id BIGSERIAL PRIMARY KEY,
-                               type_name VARCHAR(50) UNIQUE NOT NULL,
-                               overdraft_limit DECIMAL(15, 2),
-                               interest_rate DECIMAL(5, 4)
-);
-
-INSERT INTO account_types (type_name, overdraft_limit, interest_rate) VALUES
-                                                                          ('STANDARD_CHECKING', 1000, 0),
-                                                                          ('STANDARD_SAVINGS', 0, 0.02),
-                                                                          ('PREMIUM_CHECKING', 5000, 0),
-                                                                          ('PREMIUM_SAVINGS', 0, 0.05);
+-- CREATE TABLE account_types (
+--                                id BIGSERIAL PRIMARY KEY,
+--                                type_name VARCHAR(50) UNIQUE NOT NULL,
+--                                overdraft_limit DECIMAL(15, 2),
+--                                interest_rate DECIMAL(5, 4)
+-- );
+--
+-- INSERT INTO account_types (type_name, overdraft_limit, interest_rate) VALUES
+--                                                                           ('STANDARD_CHECKING', 1000, 0),
+--                                                                           ('STANDARD_SAVINGS', 0, 0.02),
+--                                                                           ('PREMIUM_CHECKING', 5000, 0),
+--                                                                           ('PREMIUM_SAVINGS', 0, 0.05);

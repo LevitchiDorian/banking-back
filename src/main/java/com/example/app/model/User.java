@@ -5,7 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
-import java.util.List;
+import java.util.List; // Make sure to import java.util.List
 
 @Entity
 @Table(name = "users", schema = "public")
@@ -31,9 +31,13 @@ public class User implements UserDetails {
 
     private String phoneNumber;
 
+    // Add this relationship
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DbAccount> dbAccounts; // Changed from Account to DbAccount
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(); // Consider implementing roles/authorities if needed
     }
 
     @Override

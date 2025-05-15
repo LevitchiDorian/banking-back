@@ -1,35 +1,36 @@
 package com.example.app.factory;
 
-import com.example.app.flyweight.AccountProperties;
-import com.example.app.flyweight.AccountTypeFlyweight;
-import com.example.app.model.StandardCheckingAccount;
 import com.example.app.model.Account;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.app.model.AccountType; // Import AccountType
+import com.example.app.model.StandardCheckingAccount;
 import org.springframework.stereotype.Component;
-import java.math.BigDecimal;
+// No longer needs @Value or specific overdraft limit in constructor
 
-@Component
+@Component // Retain as component if still managed by Spring, or remove if purely utility
 public class CheckingAccountFactory extends AccountFactory {
 
-    private final BigDecimal overdraftLimit;
-
-    public CheckingAccountFactory(
-            @Value("${overdraft.standard.limit}") String standardLimit
-    ) {
-        if(standardLimit == null || standardLimit.isBlank()) {
-            throw new IllegalArgumentException("overdraft.standard.limit property is missing");
-        }
-        this.overdraftLimit = new BigDecimal(standardLimit);
+    // Constructor can be empty or removed if no dependencies
+    public CheckingAccountFactory() {
     }
 
     @Override
     public Account createAccount(String accountNumber) {
-        // Folosește Flyweight pentru proprietăți
-        AccountProperties props = AccountTypeFlyweight.getAccountType(
-                "STANDARD_CHECKING",
-                overdraftLimit,
-                BigDecimal.ZERO // Fără dobândă pentru checking
-        );
-        return new StandardCheckingAccount(accountNumber, props.getOverdraftLimit());
+        // This method is problematic as it doesn't have AccountType info.
+        // It should ideally take AccountType or its properties.
+        // For now, let's assume a default or throw an error.
+        // The AccountService will use a more specific method.
+        throw new UnsupportedOperationException("Use createAccount(String accountNumber, AccountType accountType) instead.");
+    }
+
+    // New method to be used by AccountService
+    public Account createAccount(String accountNumber, AccountType accountType) {
+        if (!accountType.getTypeName().toUpperCase().contains("CHECKING")) {
+            throw new IllegalArgumentException("AccountType is not for a checking account: " + accountType.getTypeName());
+        }
+        // The specific type of checking account (Standard, Premium) will be decided by AccountService
+        // or this factory can be split into StandardCheckingAccountFactory and PremiumCheckingAccountFactory.
+        // For simplicity, let's assume StandardCheckingAccount if it's just "CheckingAccountFactory".
+        // AccountService will use the more specific factories (StandardAccountFactory, PremiumAccountFactory).
+        return new StandardCheckingAccount(accountNumber, accountType.getOverdraftLimit());
     }
 }
