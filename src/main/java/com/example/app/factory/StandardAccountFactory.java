@@ -2,33 +2,35 @@ package com.example.app.factory;
 
 import com.example.app.interfaces.AccountAbstractFactory;
 import com.example.app.model.Account;
+import com.example.app.model.AccountType;
 import com.example.app.model.StandardCheckingAccount;
 import com.example.app.model.StandardSavingsAccount;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.app.repository.AccountTypeRepository; // Import repository
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
+// No longer injects overdraft limit via @Value
 
 @Component("standardAccountFactory")
 public class StandardAccountFactory implements AccountAbstractFactory {
-    private final BigDecimal overdraftLimit;
 
-    public  StandardAccountFactory(
-            @Value("${overdraft.standard.limit}") String standardLimit
-    ) {
-        if(standardLimit == null || standardLimit.isBlank()) {
-            throw new IllegalArgumentException("overdraft.standard.limit property is missing");
-        }
-        this.overdraftLimit = new BigDecimal(standardLimit);
+    private final AccountTypeRepository accountTypeRepository;
+
+    @Autowired
+    public StandardAccountFactory(AccountTypeRepository accountTypeRepository) {
+        this.accountTypeRepository = accountTypeRepository;
     }
 
     @Override
     public Account createCheckingAccount(String accountNumber) {
-        return new StandardCheckingAccount(accountNumber, overdraftLimit);
+        AccountType type = accountTypeRepository.findByTypeName("STANDARD_CHECKING")
+                .orElseThrow(() -> new RuntimeException("STANDARD_CHECKING account type not found in database"));
+        return new StandardCheckingAccount(accountNumber, type.getOverdraftLimit());
     }
 
     @Override
     public Account createSavingsAccount(String accountNumber) {
-        return new StandardSavingsAccount(accountNumber, new BigDecimal("0.02"));
+        AccountType type = accountTypeRepository.findByTypeName("STANDARD_SAVINGS")
+                .orElseThrow(() -> new RuntimeException("STANDARD_SAVINGS account type not found in database"));
+        return new StandardSavingsAccount(accountNumber, type.getInterestRate());
     }
 }
