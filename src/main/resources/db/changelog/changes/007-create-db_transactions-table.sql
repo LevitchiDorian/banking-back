@@ -1,0 +1,15 @@
+-- CREATE TABLE db_transactions (
+--                                  id BIGSERIAL PRIMARY KEY,
+--                                  from_account_id BIGINT,
+--                                  to_account_id BIGINT,
+--                                  amount DECIMAL(15, 2) NOT NULL,
+--                                  description VARCHAR(255),
+--                                  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+--                                  transaction_type VARCHAR(50), -- e.g., 'TRANSFER', 'DEPOSIT', 'WITHDRAWAL', 'INTEREST', 'FEE'
+--                                  CONSTRAINT fk_from_account FOREIGN KEY (from_account_id) REFERENCES db_accounts(id) ON DELETE SET NULL,
+--                                  CONSTRAINT fk_to_account FOREIGN KEY (to_account_id) REFERENCES db_accounts(id) ON DELETE SET NULL
+-- );
+--
+-- CREATE INDEX idx_db_accounts_user_id ON db_accounts(user_id);
+-- CREATE INDEX idx_db_transactions_from_account_id ON db_transactions(from_account_id);
+-- CREATE INDEX idx_db_transactions_to_account_id ON db_transactions(to_account_id);

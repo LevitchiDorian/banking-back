@@ -1,0 +1,13 @@
+-- CREATE TABLE db_accounts (
+--                              id BIGSERIAL PRIMARY KEY,
+--                              account_number VARCHAR(50) UNIQUE NOT NULL,
+--                              user_id BIGINT NOT NULL,
+--                              account_type_id BIGINT NOT NULL,
+--                              balance DECIMAL(15, 2) DEFAULT 0 NOT NULL,
+--                              currency VARCHAR(3) DEFAULT 'LEI' NOT NULL,
+--                              insurance_benefit DECIMAL(15, 2) DEFAULT 0,
+--                              has_premium_benefits BOOLEAN DEFAULT FALSE,
+--                              opened_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--                              CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+--                              CONSTRAINT fk_account_type FOREIGN KEY (account_type_id) REFERENCES account_types(id) ON DELETE CASCADE
+-- );
