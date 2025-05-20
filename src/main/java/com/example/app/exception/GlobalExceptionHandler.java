@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(CurrencyConversionException.class)
+    public ResponseEntity<Object> handleCurrencyConversionException(CurrencyConversionException ex, WebRequest request) {
+        return buildErrorResponse(ex, ex.getMessage(), HttpStatus.BAD_REQUEST, request);
+    }
+
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException ex, WebRequest request) {
         return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
@@ -85,6 +90,21 @@ public class GlobalExceptionHandler {
         // Logați excepția aici pentru debugging
         ex.printStackTrace(); // Important pentru a vedea stack trace-ul în consolă
         return buildErrorResponse(ex, "An unexpected error occurred. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<Object> handleAccountNotFoundException(AccountNotFoundException ex, WebRequest request) {
+        return buildErrorResponse(ex, ex.getMessage(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(InvalidTransferException.class)
+    public ResponseEntity<Object> handleInvalidTransferException(InvalidTransferException ex, WebRequest request) {
+        return buildErrorResponse(ex, ex.getMessage(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(UnauthorizedOperationException.class)
+    public ResponseEntity<Object> handleUnauthorizedOperationException(UnauthorizedOperationException ex, WebRequest request) {
+        return buildErrorResponse(ex, ex.getMessage(), HttpStatus.FORBIDDEN, request);
     }
 
     private ResponseEntity<Object> buildErrorResponse(Exception ex, HttpStatus status, WebRequest request) {

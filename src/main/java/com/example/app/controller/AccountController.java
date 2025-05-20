@@ -94,4 +94,6 @@ public class AccountController {
         DbAccountResponseDTO accountDetails = accountServiceImpl.getDbAccountDetails(accountNumber, username);
         return ResponseEntity.ok(accountDetails);
     }
+
+
 }
